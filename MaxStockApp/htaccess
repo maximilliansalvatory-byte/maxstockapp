@@ -1,0 +1,25 @@
+# MaxStockApp - Apache configuration
+RewriteEngine On
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+
+# Protect sensitive directories
+RewriteRule ^(config|includes|sql)/ - [F,L]
+
+# Pretty API routes (optional - can call .php directly)
+# RewriteRule ^api/auth/login$ api/auth/login.php [L,QSA]
+# RewriteRule ^api/products$ api/products/index.php [L,QSA]
+
+# Force HTTPS in production (uncomment when ready)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Deny access to hidden files
+RewriteRule (^|/)\. - [F]
+
+# PHP settings (if allowed by host)
+# php_value upload_max_filesize 10M
+# php_value post_max_size 12M
